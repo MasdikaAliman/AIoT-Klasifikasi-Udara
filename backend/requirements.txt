@@ -1,0 +1,16 @@
+# ML & Data Analysis
+pandas
+openpyxl
+scikit-learn
+joblib
+matplotlib
+seaborn
+ipykernel
+
+# Backend Web & IoT Services
+fastapi
+uvicorn[standard]
+websockets
+paho-mqtt
+sqlalchemy
+python-dotenv

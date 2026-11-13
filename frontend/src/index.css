@@ -1,0 +1,567 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg-primary: #f8fafc; /* Slate-50 background - extremely clean and professional */
+  --card-bg: #ffffff;
+  --text-primary: #0f172a; /* Slate-900 */
+  --text-secondary: #475569; /* Slate-600 */
+  --border-color: #e2e8f0; /* Slate-200 */
+  
+  /* Strictly curated flat industrial colors - NO AI gradients or glows */
+  --color-safe-bg: #f0fdf4; /* Light emerald */
+  --color-safe-border: #bbf7d0;
+  --color-safe-text: #16a34a;
+  
+  --color-aware-bg: #fffbeb; /* Light amber */
+  --color-aware-border: #fef3c7;
+  --color-aware-text: #d97706;
+  
+  --color-danger-bg: #fef2f2; /* Light red */
+  --color-danger-border: #fee2e2;
+  --color-danger-text: #dc2626;
+  
+  --color-co-bg: #f0f9ff; /* Light sky blue */
+  --color-co-border: #e0f2fe;
+  --color-co-text: #0284c7;
+  
+  --color-update-bg: #faf5ff; /* Light purple */
+  --color-update-border: #f3e8ff;
+  --color-update-text: #7c3aed;
+  --gauge-font-size: 26px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden; /* Prevent body scroll completely */
+  box-sizing: border-box;
+}
+
+/* Main single-viewport wrapper (fits exactly 100vh, no scroll) */
+.dashboard-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  box-sizing: border-box;
+  padding: 12px;
+  gap: 12px;
+}
+
+/* Header bar matching the solid slate-900 bar in the mockup */
+.header-bar {
+  background: #0f172a; /* Deep premium slate-900 */
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  border-radius: 4px;
+  height: 40px;
+  flex-shrink: 0; /* Never shrink the header */
+}
+
+.header-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.header-status {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Top Row Cards Grid (4 columns) - Fixed height to fit viewport */
+.top-row-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  height: 140px;
+  flex-shrink: 0;
+}
+
+/* Muted solid card styling matching the mockup border and color structure */
+.mock-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Dynamic styling for Status card */
+.card-status-safe {
+  background-color: var(--color-safe-bg);
+  border-color: var(--color-safe-border);
+  color: var(--color-safe-text);
+}
+
+.card-status-aware {
+  background-color: var(--color-aware-bg);
+  border-color: var(--color-aware-border);
+  color: var(--color-aware-text);
+}
+
+.card-status-danger {
+  background-color: var(--color-danger-bg);
+  border-color: var(--color-danger-border);
+  color: var(--color-danger-text);
+}
+
+/* CO card styling */
+.card-co {
+  background-color: var(--color-co-bg);
+  border-color: var(--color-co-border);
+  color: var(--color-co-text);
+}
+
+/* O2 card styling */
+.card-o2 {
+  background-color: var(--color-safe-bg);
+  border-color: var(--color-safe-border);
+  color: var(--color-safe-text);
+}
+
+/* Update card styling */
+.card-update {
+  background-color: var(--color-update-bg);
+  border-color: var(--color-update-border);
+  color: var(--color-update-text);
+}
+
+/* Text styles inside the cards */
+.card-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.card-value-big {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin: 2px 0;
+  line-height: 1;
+}
+
+.card-desc {
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* Middle Row Charts Grid (2 columns) - Scales to fill remaining height */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  flex: 1 1 0; /* Grow and shrink dynamically */
+  min-height: 0; /* Crucial for nested flexbox scrolling */
+  min-width: 0;  /* Prevents child chart width overflow */
+}
+
+/* Chart container styling matching the mockup border */
+.glass-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 100%;
+  min-width: 0;  /* Prevents child chart width overflow */
+}
+
+.card-title-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.card-title-header h4 {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.chart-wrapper {
+  width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;  /* Prevents child chart width overflow */
+  overflow: hidden;
+}
+
+/* Bottom logs section - Fixed height to fit viewport without scrolling */
+.logs-container {
+  height: 180px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: #ffffff;
+  padding: 12px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.logs-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+
+.logs-header-row h4 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Table elements styled cleanly */
+.log-table-wrapper {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: auto; /* Scroll horizontally and vertically as needed */
+  width: 100%;
+  -webkit-overflow-scrolling: touch; /* Smooth scroll for mobile */
+}
+
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px; /* Prevents text clipping and wrapping on narrow mobile screens */
+}
+
+.log-table th {
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-secondary);
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 1;
+}
+
+.log-table td {
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.log-table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Align columns: Waktu (left), CO & O2 (right), Status (center) */
+.log-table th:nth-child(1), .log-table td:nth-child(1) {
+  text-align: left;
+  width: 35%;
+}
+.log-table th:nth-child(2), .log-table td:nth-child(2) {
+  text-align: right;
+  width: 20%;
+  padding-right: 24px;
+}
+.log-table th:nth-child(3), .log-table td:nth-child(3) {
+  text-align: right;
+  width: 20%;
+  padding-right: 24px;
+}
+.log-table th:nth-child(4), .log-table td:nth-child(4) {
+  text-align: center;
+  width: 25%;
+}
+
+/* Buttons matching clean mockup aesthetic */
+.action-button {
+  background: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.1s;
+}
+
+.action-button:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.action-button-primary {
+  background-color: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+.action-button-primary:hover {
+  background-color: #1e293b;
+  border-color: #1e293b;
+}
+
+/* ============================================================================
+   MODAL DIALOG DIALOG OVERLAY & CONTAINER STYLING
+   ============================================================================ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.45); /* Muted dark overlay screen */
+  backdrop-filter: blur(4px); /* Professional blur effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  width: 420px;
+  max-width: 90%;
+  padding: 24px;
+  box-sizing: border-box;
+  animation: slideUp 0.2s ease-out;
+}
+
+.modal-title {
+  margin: 0 0 6px 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.modal-subtitle {
+  margin: 0 0 20px 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.modal-form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.modal-form-group input[type="datetime-local"] {
+  width: 100%;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: var(--text-primary);
+  background: #ffffff;
+}
+
+.modal-form-group input[type="datetime-local"]:focus {
+  outline: none;
+  border-color: #0f172a;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal-actions .action-button {
+  padding: 8px 16px;
+  font-size: 0.8rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* .gauge-wrapper limits the width and height of d3 gauges to prevent text collisions */
+.gauge-wrapper {
+  width: 100%;
+  max-width: 140px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Responsiveness media queries */
+@media (max-width: 1280px) {
+  :root {
+    --gauge-font-size: 20px;
+  }
+  body {
+    overflow: hidden; /* Maintain body lock */
+  }
+  .dashboard-wrapper {
+    height: 100vh;
+    overflow-y: auto; /* Scroll internally inside the wrapper */
+    padding: 12px;
+    gap: 16px;
+  }
+  .top-row-grid {
+    grid-template-columns: repeat(2, 1fr);
+    height: auto;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .mock-card {
+    height: 145px; /* Keep individual card height consistent */
+    flex-shrink: 0;
+  }
+  .charts-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 16px;
+    flex: none; /* Disable flex scaling from desktop */
+  }
+  .glass-card {
+    height: 320px; /* Force explicit height so charts do not collapse to 0 */
+    flex-shrink: 0;
+  }
+  .chart-wrapper {
+    height: 240px; /* Use stable height when scrolling is enabled */
+    flex: none;
+  }
+  .logs-container {
+    height: 280px; /* Force explicit height so table has room to render rows */
+    flex: none; /* Disable flex scaling from desktop */
+  }
+  .log-table-wrapper {
+    height: calc(100% - 40px); /* Fill the container space */
+    max-height: none;
+  }
+}
+
+/* Enable vertical scrolling on short desktop screens to prevent overlap/squishing */
+@media (max-height: 720px) {
+  :root {
+    --gauge-font-size: 20px;
+  }
+  body {
+    overflow: hidden;
+  }
+  .dashboard-wrapper {
+    height: 100vh;
+    overflow-y: auto; /* Scroll internally inside the wrapper */
+    gap: 16px;
+  }
+  .top-row-grid {
+    flex-shrink: 0;
+  }
+  .charts-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 16px;
+    flex: none; /* Disable flex scaling from desktop */
+  }
+  .glass-card {
+    height: 320px;
+    flex-shrink: 0;
+  }
+  .chart-wrapper {
+    height: 240px;
+    flex: none;
+  }
+  .logs-container {
+    height: 280px;
+    flex: none; /* Disable flex scaling from desktop */
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gauge-font-size: 15px;
+  }
+  .top-row-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for a neat 2x2 grid on mobile */
+    gap: 8px;
+  }
+  .mock-card {
+    height: 110px; /* Super compact height for 2x2 cards */
+    padding: 8px;
+  }
+  .gauge-wrapper {
+    max-width: 100px; /* Scale gauges down for mobile columns */
+    height: 55px;
+    margin: 2px auto;
+  }
+  .card-value-big {
+    font-size: 1.3rem; /* Fit text on narrow widths */
+    margin: 4px 0;
+  }
+  .card-label {
+    font-size: 0.65rem;
+  }
+  .card-desc {
+    font-size: 0.6rem;
+  }
+  .header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    height: auto;
+    padding: 10px 12px;
+    flex-shrink: 0;
+  }
+  .header-status {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
